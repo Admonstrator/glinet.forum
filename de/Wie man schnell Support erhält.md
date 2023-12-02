@@ -8,6 +8,12 @@ Mit dem Besuch hier hast Du den ersten Schritt getan, um schnell Support von der
 
 Der Support hier findet in der Regel von Communitymitgliedern statt. Das sind Benutzer wie Du und ich. Sei freundlich und verstehe bitte, dass solche Personen nicht für GL.iNet arbeiten oder an der Produktentwicklung beteiligt sind. Im Zweifelsfall kannst Du Dich per E-Mail an support@gl-inet.com für offiziellen Support wenden.
 
+## Inhaltsverzeichnis
+
+[TOC]
+
+
+
 ## Wichtige Links
 
 ### Anleitungen / HowTo's und Troubleshooting / offizielle Dokumentation
@@ -41,7 +47,7 @@ Folgender Befehl liefert die aktuell verwendete Version zurück: ```cat /etc/glv
 | Stable                      | Aktuellste Version, die für den Betrieb freigegeben wurde und ausreichend getestet wurde. |
 | RC                          | "Release Candidate" - Eine Beta-Firmware, die bald als "stable" gekennzeichnet wird. Im Regelfall sind keine großen Probleme zu erwarten. |
 | Beta                        | Neuere Version, die noch nicht ganz fertig getestet ist. Nutzung auf eigene Gefahr! |
-| Snapshot                    | Auch "nightly" oder "testing" genannt: Wird jede Nacht aus dem aktuellen Quellcode generiert und enthält daher die aktuellsten Änderungen (aber auch Bugs). Nutzung auf eigene Gefahr und nicht empfohlen! |
+| Snapshot                    | Auch "nightly" oder "testing" genannt: Wird jede Nacht aus dem aktuellen Quellcode generiert und enthält daher die aktuellsten Änderungen (aber auch eine Menge Bugs). Nutzung auf eigene Gefahr und allgemein nicht empfohlen! |
 | Clean                       | Firmware ohne GL.iNet Addons - entspricht eher einer original OpenWrt-Firmware |
 | Tor                         | Diese Firmware hat Tor standardmäßig installiert, diese Funktion ist in der Beta-Phase. Nutzung auf eigene Gefahr! |
 
@@ -52,9 +58,11 @@ Folgender Befehl liefert die aktuell verwendete Version zurück: ```cat /etc/glv
 Keine Panik. In den meisten Fällen ist der Router gar nicht kaputt, sondern lediglich das Betriebssystem nicht mehr einsatzfähig. Folge im Zweifelsfall der "Debrick using U-Boot"-Anleitung hier: https://docs.gl-inet.com/router/en/4/faq/debrick/
 
 **Hinweis:** 
-Es kann zu Problemen kommen, wenn das Debricking mit MacOS oder Linux durchgeführt wird. Versuche es am besten von einem Windows-Computer aus.
+Es kann manchmal zu Problemen kommen, wenn das Debricking mit MacOS oder Linux durchgeführt wird. Versuche es am besten von einem Windows-Computer aus.
 
 ## Technische Probleme?
 
-Du hast technische Probleme mit einem GL.iNet Gerät oder eine Frage zu einer Funktion? Dann lass uns gemeinsam schauen, dass wir Abhilfe schaffen.
+Du hast technische Probleme mit einem GL.iNet Gerät oder eine Frage zu einer Funktion? Dann lass uns gemeinsam schauen, dass wir Abhilfe schaffen. Meist braucht es für die Fehleranalyse einige technische Details. Keine Sorge, wir werden diese jetzt gemeinsam sammeln.
+
+### Notwendige Informationen
 
