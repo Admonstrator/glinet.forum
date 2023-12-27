@@ -81,24 +81,12 @@ if [ "$answer" != "${answer#[Yy]}" ]; then
         # Check if certificate was issued
         if [ -f "/etc/acme/$DDNS_DOMAIN/fullchain.cer" ]; then
             echo "Certificate was issued successfully."
-            echo "Enabling HTTPS access to the router ..."
-            # Uncommenting the HTTP line in nginx.conf
-            sed -i 's/#listen 80;/listen 80;/g' /etc/nginx/conf.d/gl.conf
-            # Same for IPv6
-            sed -i 's/#listen \[::\]:80;/listen \[::\]:80;/g' /etc/nginx/conf.d/gl.conf
-            # Restarting nginx
             echo "Installing certificate in nginx ..."
             # Install the certificate in nginx
             # Replace the ssl_certificate line in nginx.conf
             # Replace the whole line, because the path is different
-            sed -i "s|ssl_certificate .*;|ssl_certificate /etc/acme/$DDNS_DOMAIN/fullchain.cer;|g" /etc/nginx/conf.d/gl.conf
-            sed -i "s|ssl_certificate_key .*;|ssl_certificate_key /etc/acme/$DDNS_DOMAIN/$DDNS_DOMAIN.key;|g" /etc/nginx/conf.d/gl.conf
-            # Restarting nginx
-            echo "Restarting nginx ..."
-            # Disabling firewall rule to open port 80
-            echo "Disabling firewall rule to open port 80 on WAN ..."
-            uci set firewall.acme.enabled='0'
-            uci commit firewall
+            sed -i 's|ssl_certificate .*;|ssl_certificate /etc/acme/$DDNS_DOMAIN/fullchain.cer;|g' /etc/nginx/conf.d/gl.conf
+            sed -i 's|ssl_certificate_key .*;|ssl_certificate_key /etc/acme/$DDNS_DOMAIN/$DDNS_DOMAIN.key;|g' /etc/nginx/conf.d/gl.conf
             # That's it
             echo ""
             echo "You can find the certificate files in /etc/acme/$DDNS_DOMAIN/"
@@ -107,12 +95,21 @@ if [ "$answer" != "${answer#[Yy]}" ]; then
             echo "  /etc/acme/$DDNS_DOMAIN/$DDNS_DOMAIN.key"
             echo ""
             echo "The certificate will expire after 90 days."
-            exit 0
         else
             echo "Certificate was not issued. Please check the log file /var/log/acme/acme.log."
             exit 1
         fi
-
+        # Uncommenting the HTTP line in nginx.conf
+        sed -i 's/#listen 80;/listen 80;/g' /etc/nginx/conf.d/gl.conf
+        # Same for IPv6
+        sed -i 's/#listen \[::\]:80;/listen \[::\]:80;/g' /etc/nginx/conf.d/gl.conf
+        # Restarting nginx
+        echo "Restarting nginx ..."
+        # Disabling firewall rule to open port 80
+        echo "Disabling firewall rule to open port 80 on WAN ..."
+        uci set firewall.acme.enabled='0'
+        uci commit firewall
+        exit 0
     fi
 else
     echo "Script aborted."
