@@ -36,8 +36,8 @@ To revert the changes to nginx, execute the following commands:
 ```sh
 sed -i '/listen \[::\]:80;/c\listen \[::\]:80;' /etc/nginx/conf.d/gl.conf
 sed -i '/listen \[::\]:80;/c\listen \[::\]:80;' /etc/nginx/conf.d/gl.conf
-sed -i "s|ssl_certificate .*;|ssl_certificate /etc/nginx/nginx.cer;|g" /etc/nginx/conf.d/gl.conf
-sed -i "s|ssl_certificate_key .*;|ssl_certificate_key /etc/nginx/nginx.key;|g" /etc/nginx/conf.d/gl.conf
+sed -i 's|ssl_certificate .*;|ssl_certificate /etc/nginx/nginx.cer;|g' /etc/nginx/conf.d/gl.conf
+sed -i 's|ssl_certificate_key .*;|ssl_certificate_key /etc/nginx/nginx.key;|g' /etc/nginx/conf.d/gl.conf
 /etc/init.d/nginx restart
 ```
 
