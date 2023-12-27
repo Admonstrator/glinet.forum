@@ -7,6 +7,9 @@ The `enable-acme.sh` script enables the Automated Certificate Management Environ
 To execute the script, the following prerequisites must be met:
 - A GL.iNet router with the latest firmware version.
 - A working internet connection.
+- DDNS must be enabled and configured.
+- DDNS IP must be the same as the router's public IP.
+- Disable VPN
 
 ## Usage
 The following steps are required to enable ACME using the script:
