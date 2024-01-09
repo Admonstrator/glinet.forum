@@ -10,4 +10,5 @@ Set WCDMA bands AT+QNWPREFCFG="gw_band",1:2:4:5:8:19
 Get Network Mode AT+QNWPREFCFG="mode_pref"
 Get Roaming Pref. AT+QNWPREFCFG="roam_pref"
 Get Network Acquisition Order AT+QNWPREFCFG="rat_acq_order"
+Enable Wi-Fi-Call (might work, might not) AT+QMBNCFG="Select", "ROW_Commercial"
 ```
