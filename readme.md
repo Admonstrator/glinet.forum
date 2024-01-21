@@ -26,3 +26,8 @@ Folder | Description
 --- | ---
 [threads](threads) | Contains the markdown files for some threads I created on the GL.iNET forum.
 [scripts](scripts) | Contains some scripts I use to help other users on the GL.iNET forum.
+
+### Scripts
+
+[scripts/update-tailscale](scripts/update-tailscale) | Contains a script to update Tailscale on GL.iNet routers.
+[scripts/enable-acme](scripts/enable-acme) | Contains a script to enable ACME on GL.iNet routers.
