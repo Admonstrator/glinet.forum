@@ -27,7 +27,7 @@ Folder | Description
 [threads](threads) | Contains the markdown files for some threads I created on the GL.iNET forum.
 [scripts](scripts) | Contains some scripts I use to help other users on the GL.iNET forum.
 
-### Scripts
+## Scripts
 
 Script | Description
 --- | ---
