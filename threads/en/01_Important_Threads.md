@@ -11,3 +11,12 @@ This is a collection of important threads and tutorials. The list is not complet
 [HOW-TO: Using iPerf3 for beginners](https://forum.gl-inet.com/t/iperf3-for-beginners/34984/2)
 
 [HOW-TO: Update Tailscale on ARM64 (like Flint2)](https://forum.gl-inet.com/t/how-to-update-tailscale-on-arm64-f-e-flint2/37582)
+
+## Threads
+
+[How to get support quickly](https://forum.gl-inet.com/t/how-to-get-support-quickly/35768)
+
+## Any other important threads missing?
+
+Please write me a PM if you think that an important thread is missing in this list.
+I'm happy to add it.
