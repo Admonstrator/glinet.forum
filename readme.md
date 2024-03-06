@@ -33,3 +33,4 @@ Script | Description
 --- | ---
 [scripts/update-tailscale](scripts/update-tailscale) | Contains a script to update Tailscale on GL.iNet routers.
 [scripts/enable-acme](scripts/enable-acme) | Contains a script to enable ACME on GL.iNet routers.
+[scripts/update-adguardhome](scripts/update-adguardhome) | Contains a script to update AdGuard Home on GL.iNet routers.
