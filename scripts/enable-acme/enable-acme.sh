@@ -26,7 +26,7 @@ create_acme_config() {
     uci set acme.@acme[0].account_email='acme@glddns.com'
     uci set acme.@acme[0].debug='1'
     uci set acme.$DDNS_DOMAIN_PREFIX=cert
-    uci set acme.$DDNS_DOMAIN_PREFIX.enabled='1'
+    uci set acme.$DDNS_DOMAIN_PREFIX.enabled='0'
     uci set acme.$DDNS_DOMAIN_PREFIX.use_staging='1'
     uci set acme.$DDNS_DOMAIN_PREFIX.keylength='2048'
     uci set acme.$DDNS_DOMAIN_PREFIX.validation='standalone'
