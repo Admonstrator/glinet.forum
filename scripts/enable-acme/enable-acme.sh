@@ -189,6 +189,8 @@ invoke_outro() {
         echo "🦭 👋"
         exit 1
     else
+        # Install cronjob
+        install_cronjob
         echo -e "\033[32m┌────────────────────────────────────────────────────────────────────────┐\033[0m"
         echo -e "\033[32m│ A C M E   E N A B L E D   S U C C E S S F U L L Y                      │\033[0m"
         echo -e "\033[32m└────────────────────────────────────────────────────────────────────────┘\033[0m"
@@ -215,29 +217,56 @@ install_cronjob() {
     echo "└────────────────────────────────────────────────────────────────────────┘"
     # Create cron job to renew the certificate
     echo "Checking if cronjob already exists ..."
-    if crontab -l | grep -q "acme.sh"; then
+    if crontab -l | grep -q "enable-acme"; then
         echo "Cron job already exists. Skipping ..."
     else
         echo "Installing cronjob ..."
-        (crontab -l 2>/dev/null; echo "0 0 * * * /usr/lib/acme/acme.sh --cron --home /etc/acme ") | crontab -
-        echo -e "\033[32m✓\033[0m Cron job installed successfully."
+        install_script
+        (crontab -l 2>/dev/null; echo "0 0 * * * /usr/bin/enable-acme --renew ") | crontab -
+        echo -e "\033[32m✓\033[0m Cronjob installed successfully."
     fi
 }
 
-invoke_intro
-preflight_check
-echo "Do you want to continue? (y/N)"
-read answer
-if [ "$answer" != "${answer#[Yy]}" ]; then
-    install_prequisites
+install_script() {
+    # Copying the script to /usr/bin
+    echo "Copying the script to /usr/bin ..."
+    cp $0 /usr/bin/enable-acme
+    chmod +x /usr/bin/enable-acme
+    echo -e "\033[32m✓\033[0m Script installed successfully."
+}
+
+invoke_renewal(){
     open_firewall 1
-    create_acme_config
     config_nginx 1
-    get_acme_cert
+    echo "┌────────────────────────────────────────────────────────────────────────┐"
+    echo "│ R E N E W I N G   C E R T I F I C A T E                                │"
+    echo "└────────────────────────────────────────────────────────────────────────┘"
+    /usr/lib/acme/acme.sh --cron --home /etc/acme
     config_nginx 0
     open_firewall 0
-    invoke_outro
-else
-    echo "Ok, see you next time!"
-    exit 1
+}
+
+# Main
+# Check if --renew is used
+if [ "$1" = "--renew" ]; then
+    invoke_renewal
+    exit 0
+else 
+    invoke_intro
+    preflight_check
+    echo "Do you want to continue? (y/N)"
+    read answer
+    if [ "$answer" != "${answer#[Yy]}" ]; then
+        install_prequisites
+        open_firewall 1
+        create_acme_config
+        config_nginx 1
+        get_acme_cert
+        config_nginx 0
+        open_firewall 0
+        invoke_outro
+    else
+        echo "Ok, see you next time!"
+        exit 1
+    fi
 fi

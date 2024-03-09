@@ -18,6 +18,12 @@ To execute the script, the following prerequisites must be met:
 
 ## Usage
 
+You can run it without cloning the repository by using the following command:
+
+```shell
+wget -O enable-acme.sh https://raw.githubusercontent.com/Admonstrator/glinet.forum/main/scripts/enable-acme/enable-acme.sh && sh enable-acme.sh
+```
+
 The following steps are required to enable ACME using the script:
 
 1. Download the script onto the router.
