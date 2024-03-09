@@ -7,7 +7,7 @@
 # Update: 2024-03-09
 # Date: 2023-12-27
 #
-# Usage: ./enable-acme.sh
+# Usage: ./enable-acme.sh [--renew]
 # Warning: This script might potentially harm your router. Use it at your own risk.
 #
 
@@ -59,11 +59,19 @@ open_firewall() {
 }
 
 preflight_check() {
+    FIRMWARE_VERSION=$(cut -c1 </etc/glversion)
     PREFLIGHT=0
     echo "┌────────────────────────────────────────────────────────────────────────┐"
     echo "│ C H E C K I N G   P R E R E Q U I S I T E S                            │"
     echo "└────────────────────────────────────────────────────────────────────────┘"
     echo "Checking if prerequisites are met ..."
+    if [ "${FIRMWARE_VERSION}" -lt 4 ]; then
+        echo -e "\033[31mx\033[0m ERROR: This script only works on firmware version 4 or higher."
+        PREFLIGHT=1
+    else
+        echo -e "\033[32m✓\033[0m Firmware version: $FIRMWARE_VERSION"
+    fi
+    # Check if public IP address is available
     PUBLIC_IP=$(sudo -g nonevpn curl -s https://api.ipify.org)
     if [ -z "$PUBLIC_IP" ]; then
         echo -e "\033[31mx\033[0m ERROR: Could not get public IP address. Please check your internet connection."

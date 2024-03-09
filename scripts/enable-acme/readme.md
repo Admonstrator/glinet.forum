@@ -32,6 +32,17 @@ The following steps are required to enable ACME using the script:
 4. Enter the command `sh enable-acme.sh` and press Enter.
 5. Follow the on-screen instructions to complete the ACME process.
 
+## Renewal
+
+The certificate will be renewed automatically by a cronjob. The cronjob is installed by the script.
+It will check for a renewal every day at 00:00
+
+You can manually renew the certificate by executing the following command:
+
+```shell
+/usr/bin/enable-acme --renew
+```
+
 ## Notes
 
 - Ensure that you have sufficient permissions to execute the script.
