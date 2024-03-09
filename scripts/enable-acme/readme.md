@@ -2,7 +2,9 @@
 
 ## Description
 
-The `enable-acme.sh` script enables the Automated Certificate Management Environment (ACME) for GL.iNet routers. **Renewal of the certificates is currently not supported.**
+The `enable-acme.sh` script enables the Automated Certificate Management Environment (ACME) for GL.iNet routers.
+It will request a certificate for the router's public IP and configure nginx to use it.
+Renewal of the certificate will installed as a cron job.
 
 ## Prerequisites
 
@@ -11,8 +13,8 @@ To execute the script, the following prerequisites must be met:
 - A GL.iNet router with the latest firmware version.
 - A working internet connection.
 - DDNS must be enabled and configured.
-- DDNS IP must be the same as the router's public IP.
-- Disable VPN
+- DDNS IP must be the same as the router's public IP. Will be checked by the script.
+- The script will request a certificate for the router's public IP. VPN IP is not supported.
 
 ## Usage
 
@@ -44,8 +46,6 @@ sed -i 's|ssl_certificate_key .*;|ssl_certificate_key /etc/nginx/nginx.key;|g' /
 ## Disclaimer
 
 This script is provided as is and without any warranty. Use it at your own risk.
-
-**It's a really early stage and definitely not ready for production use.**
 
 **It may break your router, your computer, your network or anything else. It may even burn down your house.**
 
