@@ -26,8 +26,8 @@ create_acme_config() {
     uci set acme.@acme[0].account_email='acme@glddns.com'
     uci set acme.@acme[0].debug='1'
     uci set acme.$DDNS_DOMAIN_PREFIX=cert
-    uci set acme.$DDNS_DOMAIN_PREFIX.enabled='0'
-    uci set acme.$DDNS_DOMAIN_PREFIX.use_staging='1'
+    uci set acme.$DDNS_DOMAIN_PREFIX.enabled='1'
+    uci set acme.$DDNS_DOMAIN_PREFIX.use_staging='0'
     uci set acme.$DDNS_DOMAIN_PREFIX.keylength='2048'
     uci set acme.$DDNS_DOMAIN_PREFIX.validation='standalone'
     uci set acme.$DDNS_DOMAIN_PREFIX.update_nginx='1'
@@ -180,20 +180,20 @@ get_acme_cert(){
         sed -i "s|ssl_certificate_key .*;|ssl_certificate_key /etc/acme/$DDNS_DOMAIN/$DDNS_DOMAIN.key;|g" /etc/nginx/conf.d/gl.conf
         FAIL=0
     else
-        echo -e "\033[31mERROR: Certificate was not issued. Please check the log file /var/log/acme/acme.log.\033[0m"
+        echo -e "\033[31mERROR: Certificate was not issued. Please check the log by running logread.\033[0m"
         FAIL=1
     fi
 }
 
 invoke_outro() {
     if [ "$FAIL" -eq 1 ]; then
-        echo -e "\033[31mx\033[0m┌────────────────────────────────────────────────────────────────────────┐\033[0m"
-        echo -e "\033[31mx\033[0m│ A C M E   F A I L E D                                                  │\033[0m"
-        echo -e "\033[31mx\033[0m└────────────────────────────────────────────────────────────────────────┘\033[0m"
+        echo -e "\033[31m┌────────────────────────────────────────────────────────────────────────┐\033[0m"
+        echo -e "\033[31m│ A C M E   F A I L E D                                                  │\033[0m"
+        echo -e "\033[31m└────────────────────────────────────────────────────────────────────────┘\033[0m"
         echo -e "\033[31mThe ACME certificate was not installed successfully.\033[0m"
         echo -e "\033[31mPlease report any issues on the GL.iNET forum.\033[0m"
         echo ""
-        echo -e "\033[31mYou can find the log file in /var/log/acme/acme.log\033[0m"
+        echo -e "\033[31mYou can find the log file by executing logread\033[0m"
         echo "🦭 👋"
         exit 1
     else
