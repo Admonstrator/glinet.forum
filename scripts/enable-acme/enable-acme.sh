@@ -75,7 +75,7 @@ preflight_check() {
     PUBLIC_IP=$(sudo -g nonevpn curl -s https://api.ipify.org)
     if [ -z "$PUBLIC_IP" ]; then
         echo -e "\033[31mx\033[0m ERROR: Could not get public IP address. Please check your internet connection."
-        PREFLIGHT = 1
+        PREFLIGHT=1
     else
         echo -e "\033[32m✓\033[0m Public IP address: $PUBLIC_IP"
     fi
