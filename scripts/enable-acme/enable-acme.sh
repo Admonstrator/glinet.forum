@@ -72,7 +72,7 @@ preflight_check() {
         echo -e "\033[32m✓\033[0m Firmware version: $FIRMWARE_VERSION"
     fi
     # Check if public IP address is available
-    PUBLIC_IP=$(sudo -g nonevpn curl -s https://api.ipify.org)
+    PUBLIC_IP=$(sudo -g nonevpn curl -4 -s https://api.ipify.org)
     if [ -z "$PUBLIC_IP" ]; then
         echo -e "\033[31mx\033[0m ERROR: Could not get public IP address. Please check your internet connection."
         PREFLIGHT=1
@@ -80,7 +80,7 @@ preflight_check() {
         echo -e "\033[32m✓\033[0m Public IP address: $PUBLIC_IP"
     fi
     DDNS_DOMAIN=$(uci get ddns.glddns.domain)
-    DDNS_IP=$(nslookup $DDNS_DOMAIN | grep Address | tail -n 1 | awk '{print $3}')
+    DDNS_IP=$(nslookup $DDNS_DOMAIN | sed -n '/Address/s/.*: \(.*\)/\1/p' | grep -v ':')
     if [ -z "$DDNS_IP" ]; then
         echo -e "\033[31mx\033[0m ERROR: DDNS IP address not found. Please enable DDNS first."
         PREFLIGHT=1
@@ -254,27 +254,55 @@ invoke_renewal(){
     open_firewall 0
 }
 
+select_ports(){
+    echo "┌────────────────────────────────────────────────────────────────────────┐"
+    echo "│ S E L E C T   P O R T S                                                │"
+    echo "└────────────────────────────────────────────────────────────────────────┘"
+    echo "Do you want to use the default ports (80 and 443) for HTTP and HTTPS?"
+    echo "If you're not sure, it's recommended to use the default ports."
+    echo "If you're using the default ports for something else, you can change them."
+    echo "Do you want to use the default ports? (y/N)"
+    read answer
+    if [ "$answer" != "${answer#[Yy]}" ]; then
+        echo "Using default ports ..."
+        HTTP_PORT=80
+        HTTPS_PORT=443
+    else
+        echo "Please enter the port number for HTTP (default: 80):"
+        read HTTP_PORT
+        echo "Please enter the port number for HTTPS (default: 443):"
+        read HTTPS_PORT
+    fi
+    echo "HTTP port: $HTTP_PORT"
+    echo "HTTPS port: $HTTPS_PORT"
+}
+
 # Main
 # Check if --renew is used
 if [ "$1" = "--renew" ]; then
     invoke_renewal
     exit 0
-else 
-    invoke_intro
-    preflight_check
-    echo "Do you want to continue? (y/N)"
-    read answer
-    if [ "$answer" != "${answer#[Yy]}" ]; then
-        install_prequisites
-        open_firewall 1
-        create_acme_config
-        config_nginx 1
-        get_acme_cert
-        config_nginx 0
-        open_firewall 0
-        invoke_outro
-    else
-        echo "Ok, see you next time!"
-        exit 1
-    fi
+fi
+
+# Check if --change-ports is used
+if [ "$1" = "--change-ports" ]; then
+    select_ports
+fi
+
+invoke_intro
+preflight_check
+echo "Do you want to continue? (y/N)"
+read answer
+if [ "$answer" != "${answer#[Yy]}" ]; then
+    install_prequisites
+    open_firewall 1
+    create_acme_config
+    config_nginx 1
+    get_acme_cert
+    config_nginx 0
+    open_firewall 0
+    invoke_outro
+else
+    echo "Ok, see you next time!"
+    exit 1
 fi
