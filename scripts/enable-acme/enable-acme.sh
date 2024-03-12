@@ -114,7 +114,7 @@ preflight_check() {
 
 invoke_intro() {
     echo "┌────────────────────────────────────────────────────────────────────────┐"
-    echo "│ GL.iNet router script by Admon 🦭 for the GL.iNET community            │"
+    echo "│ GL.iNet router script by Admon 🦭 for the GL.iNet community            │"
     echo "├────────────────────────────────────────────────────────────────────────┤"
     echo "│ WARNING: THIS SCRIPT MIGHT POTENTIALLY HARM YOUR ROUTER!               │"
     echo "│ It's only recommended to use this script if you know what you're doing.│"
