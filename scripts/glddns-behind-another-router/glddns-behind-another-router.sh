@@ -2,7 +2,7 @@
 #
 #
 # Description: This script enables GL.iNet DDNS service behind another router
-# Thread: https://forum.gl-inet.com/t/is-there-a-way-to-get-a-letsencrypt-certificate-for-the-factory-ddns-on-the-mt6000/
+# Thread: https://forum.gl-inet.com/t/script-use-glddns-behind-another-router-testing/39747
 # Author: Admon
 # Date: 2024-03-13
 #
