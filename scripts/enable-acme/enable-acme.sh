@@ -4,8 +4,9 @@
 # Description: This script enables ACME support on GL.iNet routers
 # Thread: https://forum.gl-inet.com/t/is-there-a-way-to-get-a-letsencrypt-certificate-for-the-factory-ddns-on-the-mt6000/
 # Author: Admon
-# Update: 2024-03-09
+# Update: 2024-03-24
 # Date: 2023-12-27
+SCRIPT_VERSION="2024.03.24.01"
 #
 # Usage: ./enable-acme.sh [--renew]
 # Warning: This script might potentially harm your router. Use it at your own risk.
@@ -277,6 +278,38 @@ select_ports(){
     echo "HTTPS port: $HTTPS_PORT"
 }
 
+make_permanent() {
+    echo "Modifying /etc/sysupgrade.conf ..."
+    if ! grep -q "/etc/acme" /etc/sysupgrade.conf; then
+        echo "/etc/acme" >>/etc/sysupgrade.conf
+    fi
+    
+    if ! grep -q "/etc/nginx/conf.d/gl.conf" /etc/sysupgrade.conf; then
+        echo "/etc/nginx/conf.d/gl.conf" >>/etc/sysupgrade.conf
+    fi
+    echo -e "\033[32m✓\033[0m Configuration added to /etc/sysupgrade.conf."
+}
+
+invoke_update() {
+     SCRIPT_VERSION_NEW=$(curl -s "https://raw.githubusercontent.com/Admonstrator/glinet.forum/main/scripts/update-tailscale/update-tailscale.sh" | grep -o 'SCRIPT_VERSION="[0-9]\{4\}\.[0-9]\{2\}\.[0-9]\{2\}\.[0-9]\{2\}"' | cut -d '"' -f 2 || echo "Failed to retrieve script version")
+    if [ "$SCRIPT_VERSION_NEW" != "$SCRIPT_VERSION" ]; then
+        echo -e "\033[33mA new version of this script is available: $SCRIPT_VERSION_NEW\033[0m"
+        echo -e "\033[33mThe script will now be updated ...\033[0m"
+        wget -qO /tmp/update-tailscale.sh "https://raw.githubusercontent.com/Admonstrator/glinet.forum/main/scripts/update-tailscale/update-tailscale.sh"
+        # Get current script path
+        SCRIPT_PATH=$(readlink -f "$0")
+        # Replace current script with updated script
+        rm "$SCRIPT_PATH"
+        mv /tmp/update-tailscale.sh "$SCRIPT_PATH"
+        chmod +x "$SCRIPT_PATH"
+        echo -e "\033[32mThe script has been updated successfully. It will restart in 3 seconds ...\033[0m"
+        sleep 3
+        exec "$SCRIPT_PATH" "$@"
+    else
+        echo -e "\033[32mYou are using the latest version of this script!\033[0m"
+    fi
+}
+
 # Main
 # Check if --renew is used
 if [ "$1" = "--renew" ]; then
@@ -301,6 +334,7 @@ if [ "$answer" != "${answer#[Yy]}" ]; then
     get_acme_cert
     config_nginx 0
     open_firewall 0
+    make_permanent
     invoke_outro
 else
     echo "Ok, see you next time!"
