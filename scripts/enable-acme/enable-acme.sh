@@ -291,16 +291,16 @@ make_permanent() {
 }
 
 invoke_update() {
-     SCRIPT_VERSION_NEW=$(curl -s "https://raw.githubusercontent.com/Admonstrator/glinet.forum/main/scripts/update-tailscale/update-tailscale.sh" | grep -o 'SCRIPT_VERSION="[0-9]\{4\}\.[0-9]\{2\}\.[0-9]\{2\}\.[0-9]\{2\}"' | cut -d '"' -f 2 || echo "Failed to retrieve script version")
+     SCRIPT_VERSION_NEW=$(curl -s "https://raw.githubusercontent.com/Admonstrator/glinet.forum/main/scripts/enable-acme/enable-acme.sh" | grep -o 'SCRIPT_VERSION="[0-9]\{4\}\.[0-9]\{2\}\.[0-9]\{2\}\.[0-9]\{2\}"' | cut -d '"' -f 2 || echo "Failed to retrieve script version")
     if [ "$SCRIPT_VERSION_NEW" != "$SCRIPT_VERSION" ]; then
         echo -e "\033[33mA new version of this script is available: $SCRIPT_VERSION_NEW\033[0m"
         echo -e "\033[33mThe script will now be updated ...\033[0m"
-        wget -qO /tmp/update-tailscale.sh "https://raw.githubusercontent.com/Admonstrator/glinet.forum/main/scripts/update-tailscale/update-tailscale.sh"
+        wget -qO /tmp/enable-acme.sh "https://raw.githubusercontent.com/Admonstrator/glinet.forum/main/scripts/enable-acme/enable-acme.sh"
         # Get current script path
         SCRIPT_PATH=$(readlink -f "$0")
         # Replace current script with updated script
         rm "$SCRIPT_PATH"
-        mv /tmp/update-tailscale.sh "$SCRIPT_PATH"
+        mv /tmp/enable-acme.sh "$SCRIPT_PATH"
         chmod +x "$SCRIPT_PATH"
         echo -e "\033[32mThe script has been updated successfully. It will restart in 3 seconds ...\033[0m"
         sleep 3
@@ -322,6 +322,7 @@ if [ "$1" = "--change-ports" ]; then
     select_ports
 fi
 
+invoke_update
 invoke_intro
 preflight_check
 echo "Do you want to continue? (y/N)"
