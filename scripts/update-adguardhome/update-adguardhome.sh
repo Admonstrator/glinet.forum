@@ -6,7 +6,7 @@
 # Author: Admon
 # Date: 2024-03-13
 # Updated: 2024-03-07
-SCRIPT_VERSION="2024.04.14.01"
+SCRIPT_VERSION="2024.05.04.01"
 #
 # Usage: ./update-adguardhome.sh [--ignore-free-space]
 # Warning: This script might potentially harm your router. Use it at your own risk.
@@ -74,11 +74,11 @@ upgrade_persistance() {
 }
 
 invoke_update() {
-     SCRIPT_VERSION_NEW=$(curl -s "https://raw.githubusercontent.com/Admonstrator/glinet.forum/main/scripts/update-adguardhome/update-adguardhome.sh" | grep -o 'SCRIPT_VERSION="[0-9]\{4\}\.[0-9]\{2\}\.[0-9]\{2\}\.[0-9]\{2\}"' | cut -d '"' -f 2 || echo "Failed to retrieve script version")
+     SCRIPT_VERSION_NEW=$(curl -s "https://raw.githubusercontent.com/Admonstrator/glinet-adguard-updater/main/update-adguardhome.sh" | grep -o 'SCRIPT_VERSION="[0-9]\{4\}\.[0-9]\{2\}\.[0-9]\{2\}\.[0-9]\{2\}"' | cut -d '"' -f 2 || echo "Failed to retrieve script version")
     if [ "$SCRIPT_VERSION_NEW" != "$SCRIPT_VERSION" ]; then
         echo -e "\033[33mA new version of this script is available: $SCRIPT_VERSION_NEW\033[0m"
         echo -e "\033[33mThe script will now be updated ...\033[0m"
-        wget -qO /tmp/update-adguardhome.sh "https://raw.githubusercontent.com/Admonstrator/glinet.forum/main/scripts/update-adguardhome/update-adguardhome.sh"
+        wget -qO /tmp/update-adguardhome.sh "https://raw.githubusercontent.com/Admonstrator/glinet-adguard-updater/main/update-adguardhome.sh"
         # Get current script path
         SCRIPT_PATH=$(readlink -f "$0")
         # Replace current script with updated script
