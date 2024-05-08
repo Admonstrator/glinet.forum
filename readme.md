@@ -34,5 +34,5 @@ Script | Description
 [glinet-tailscale-updater](https://github.com/Admonstrator/glinet-tailscale-updater) | Contains a script to update Tailscale on GL.iNet routers.
 [glinet-adguard-updater](https://github.com/Admonstrator/glinet-adguard-updater) | Contains a script to update AdGuard Home on GL.iNet routers.
 [glinet-remove-chinalock.sh](https://github.com/Admonstrator/glinet-remove-chinalock) | Restoring VPN functionality on GL.iNet routers by removing the "China" lock.
-[scripts/enable-acme](scripts/enable-acme) | Contains a script to enable ACME on GL.iNet routers.
+[glinet-enable-acme]([scripts/enable-acme](https://github.com/Admonstrator/glinet-enable-acme)) | Contains a script to enable ACME on GL.iNet routers.
 [scripts/glddns-behind-another-router](scripts/glddns-behind-another-router) | Contains a script to update the DDNS IP address of a GL.iNet router that is behind another router.
